@@ -181,13 +181,29 @@ class AlbumViewController: UIViewController, MKMapViewDelegate {
         showEmptyAlbumMessage(photos.count == 0)
     }
     
+    func randomPage() -> Int {
+        guard let album = pin.album else { return 1 }
+        let totalPages:  Int = Int(album.totalPages)
+        let currentPage: Int = Int(album.page)
+        var randomPage:  Int = 1
+
+        repeat { randomPage = Int.random(in: 1..<totalPages)
+        } while randomPage == currentPage
+        
+        return randomPage
+    }
+    
 
     
     /// Fetch new collection method
     @IBAction func onNewAlbumTap(_ sender: UIBarButtonItem) {
         processing(true)
         deleteAlbum()
-        NetworkManager.shared.downloadAlbumFor(lat: pin.latitude, long: pin.longitude, completion: handleAlbumResponse)
+
+        guard let album = pin.album else { return }
+        let randomPage = randomPage()
+        album.page = Int16(randomPage)
+        NetworkManager.shared.downloadAlbumFor(lat: pin.latitude, long: pin.longitude, page: randomPage, completion: handleAlbumResponse)
     }
     
 
