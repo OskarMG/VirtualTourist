@@ -13,7 +13,7 @@ class NetworkManager {
     
     // MARK: Properties
     static let shared = NetworkManager()
-    static private let apiKey = "[PLACE YOUR API KEY HERE]"
+    static private let apiKey = "beca1eb433ff3ff0184ca556aabfc278"
     
     enum Endpoint {
         static let base = "https://www.flickr.com/services/rest/"
